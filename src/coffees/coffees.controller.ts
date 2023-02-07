@@ -1,10 +1,13 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query } from '@nestjs/common';
 
 @Controller('coffees')
 export class CoffeesController {
   @Get('flavors')
-  findAll() {
-    return 'This action returns all coffees';
+    // Use query to paginate the response
+  findAll(@Query() paginationQuery) {
+    // Object destructuring to come in every request
+    const { limit, offset } = paginationQuery;
+    return `This action returns all coffees. Limit: ${limit}, offset: ${offset}`;
   }
 
   // Return route parameters
