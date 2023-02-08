@@ -2,6 +2,10 @@ import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post
 
 @Controller('coffees')
 export class CoffeesController {
+  // Inject services in the controller
+  constructor(private readonly coffeesService: CoffeesService) {
+    
+  }
   @Get('flavors')
     // Use query to paginate the response
   findAll(@Query() paginationQuery) {
