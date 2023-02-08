@@ -2,5 +2,5 @@ export class Mugs {
   id: number;
   name: string;
   brand: string;
-  color: string[];
+  colors: string[];
 }
