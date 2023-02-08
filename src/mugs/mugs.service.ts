@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Mugs } from './entities/mugs.entity';
 
 @Injectable()
@@ -18,6 +18,9 @@ export class MugsService {
 
   findOne(id: string) {
     const mugs = this.mugs.find(item => item.id === +id);
+    if (!mugs) {
+      throw new NotFoundException(`Mug #${id} not found`)
+    }
     return mugs;
   }
 
@@ -29,6 +32,8 @@ export class MugsService {
     const existingMug = this.findOne(id);
     if (existingMug) {
       // Update the selected object
+    } else {
+      throw new NotFoundException(`Mug #${id} not found for updating`)
     }
   }
 
@@ -36,6 +41,8 @@ export class MugsService {
     const mugsIndex = this.mugs.findIndex(item => item.id === +id);
     if (mugsIndex >= 0) {
       this.mugs.splice(mugsIndex, 1)
+    } else {
+      throw new NotFoundException(`Mug #${id} not found to be removed`)
     }
   }
 
