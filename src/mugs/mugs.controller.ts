@@ -31,9 +31,9 @@ export class MugsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body('name') body) {
+  update(@Param('id') id: string, @Body('name') updateCoffeeDto: UpdateCoffeeDto) {
     // return `Endpoint updates a mug. Updating id#${id} to new body named #${body}`
-    return this.mugsService.update(id, body)
+    return this.mugsService.update(id, updateCoffeeDto)
   }
 
   @Delete(':id')
