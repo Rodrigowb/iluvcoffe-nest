@@ -1,5 +1,6 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateCoffeeDto } from './crate-coffee.dto'
+import { CreateCoffeeDto } from './create-coffee.dto';
 
 // Extands the CreateCoffeeDto to avoid code duplicity
-export class UpdateCoffeeDto extends PartialType{CreateCoffeeDto} {}
+// PartialTYpes make all inherited labels optional
+export class UpdateCoffeeDto extends PartialType(CreateCoffeeDto) {}
