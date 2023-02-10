@@ -25,16 +25,16 @@ export class CoffeesController {
 
   // Request body/ payload
   @Post()  
-  create(@Body('name') body) {
+  create(@Body('name') createCoffeeDto: CreateCoffeeDto) {
     // return body;
-    return this.coffeesService.create(body);
+    return this.coffeesService.create(createCoffeeDto);
   }
 
   // Update patch request
   @Patch(':id')
-  update(@Param('id') id: string, @Body() body) {
+  update(@Param('id') id: string, @Body() updateCoffeeDto: UpdateCoffeeDto) {
     // return `This action updates #${id} coffee`
-    return this.coffeesService.update(id, body);
+    return this.coffeesService.update(id, updateCoffeeDto);
   }
 
   // Delete requests
