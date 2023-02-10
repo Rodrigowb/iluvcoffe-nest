@@ -1,5 +1,7 @@
 import { Controller, Get, Query, Param, Post, Body, Patch, Delete } from '@nestjs/common';
 import { MugsService } from './mugs.service';
+import { CreateMugsDto } from './dto/create-mugs.dto'
+import { UpdateMugsDto } from './dto/update-mugs.dto'
 
 @Controller('mugs')
 export class MugsController {
@@ -25,15 +27,15 @@ export class MugsController {
   }
 
   @Post()
-  create(@Body() body) {
+  create(@Body() createMugsDto: CreateMugsDto) {
     // return `Endpoint creats a mug. Name of mug created: ${body}`
-    return this.mugsService.create(body)
+    return this.mugsService.create(createMugsDto)
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body('name') body) {
+  update(@Param('id') id: string, @Body() updateMugsDto: UpdateMugsDto) {
     // return `Endpoint updates a mug. Updating id#${id} to new body named #${body}`
-    return this.mugsService.update(id, body)
+    return this.mugsService.update(id, updateMugsDto)
   }
 
   @Delete(':id')
