@@ -25,9 +25,9 @@ export class MugsController {
   }
 
   @Post()
-  create(@Body() body) {
+  create(@Body() createCoffeeDto: CreateCoffeeDto) {
     // return `Endpoint creats a mug. Name of mug created: ${body}`
-    return this.mugsService.create(body)
+    return this.mugsService.create(createCoffeeDto)
   }
 
   @Patch(':id')
