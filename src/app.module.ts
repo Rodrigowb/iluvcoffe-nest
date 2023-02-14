@@ -6,17 +6,18 @@ import { MugsModule } from './mugs/mugs.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [CoffeesModule,
+  imports: [
+    CoffeesModule,
     MugsModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
-      port: 5432,
+      port: 5433,
       username: 'postgres',
       password: 'pass123',
       database: 'postgres',
       autoLoadEntities: true,
-      synchronize: true
+      synchronize: true,
     })],
   controllers: [AppController],
   providers: [AppService],
