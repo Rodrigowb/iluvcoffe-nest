@@ -1,19 +1,21 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { CreateMugsDto } from './dto/create-mugs.dto';
+import { UpdateMugsDto } from './dto/update-mugs.dto';
 import { Mugs } from './entities/mugs.entity';
+
 
 @Injectable()
 export class MugsService {
-  private mugs: Mugs[] = [
-    {
-      id: 1,
-      name: 'Mandalorian mug',
-      brand: 'Lucas Films',
-      colors: ['Black', 'Red']
-    }
-  ];
+  // Inject repository from our entity
+  constructor(
+    @InjectRepository(Mugs)
+    private readonly mugsRepository: Repository<Mugs>,
+  ) {}
 
   findAll() {
-    return this.mugs
+    return this.mugsRepository.find();
   }
 
   findOne(id: string) {
