@@ -18,12 +18,12 @@ export class MugsService {
     return this.mugsRepository.find();
   }
 
-  findOne(id: string) {
-    const mugs = this.mugs.find(item => item.id === +id);
-    if (!mugs) {
+  async findOne(id: string) {
+    const mug = await this.mugsRepository.findOne({ where: { id: +id } });
+    if (!mug) {
       throw new NotFoundException(`Mug #${id} not found`)
     }
-    return mugs;
+    return mug;
   }
 
   create(createMugsDto: any) {
