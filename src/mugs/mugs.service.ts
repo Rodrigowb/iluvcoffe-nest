@@ -26,8 +26,10 @@ export class MugsService {
     return mug;
   }
 
-  create(createMugsDto: any) {
-    this.mugs.push(createMugsDto)
+  create(createMugsDto: CreateMugsDto) {
+    const mug = this.mugsRepository.create(createMugsDto)
+    return this.mugsRepository.save(mug)
+
   }
 
   update(id: string, updateMugsDto: any) {
