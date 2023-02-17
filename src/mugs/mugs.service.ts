@@ -43,14 +43,10 @@ export class MugsService {
     return this.mugsRepository.save(mug)
   }
 
-  remove(id: string) {
-    const mugsIndex = this.mugs.findIndex(item => item.id === +id);
-    if (mugsIndex >= 0) {
-      this.mugs.splice(mugsIndex, 1)
-    } else {
-      throw new NotFoundException(`Mug #${id} not found to be removed`)
+  async remove(id: string) {
+    const mug = await this.findOne(id)
+    return this.mugsRepository.remove(mug);
+  
     }
   }
 
-
-}
