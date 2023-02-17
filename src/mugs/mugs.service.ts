@@ -32,13 +32,15 @@ export class MugsService {
 
   }
 
-  update(id: string, updateMugsDto: any) {
-    const existingMug = this.findOne(id);
-    if (existingMug) {
-      // Update the selected object
-    } else {
-      throw new NotFoundException(`Mug #${id} not found for updating`)
+  async update(id: string, updateMugsDto: UpdateMugsDto) {
+    const mug = await this.mugsRepository.preload({
+      id: +id,
+      ...updateMugsDto
+    });
+    if (!mug) {
+      throw new NotFoundException(`Mug #${id} not found`);
     }
+    return this.mugsRepository.save(mug)
   }
 
   remove(id: string) {
