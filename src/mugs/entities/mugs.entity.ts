@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, JoinTable, ManyToMany } from 'typeorm';
+import { Color } from './color.entity';
 
 @Entity()
 export class Mugs {
@@ -11,6 +12,10 @@ export class Mugs {
   @Column()
   brand: string;
 
-  @Column('json', {nullable:true})
+  @JoinTable()
+  @ManyToMany(
+    type => Color,
+    color => color.mugs
+  )
   colors: string[];
 }
