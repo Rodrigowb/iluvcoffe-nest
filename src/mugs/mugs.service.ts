@@ -15,11 +15,20 @@ export class MugsService {
   ) {}
 
   findAll() {
-    return this.mugsRepository.find();
+    return this.mugsRepository.find({
+      relations: {
+        colors: true
+      }
+    });
   }
 
   async findOne(id: string) {
-    const mug = await this.mugsRepository.findOne({ where: { id: +id } });
+    const mug = await this.mugsRepository.findOne({
+      where: { id: +id },
+      relations: {
+        colors: true
+      }
+    });
     if (!mug) {
       throw new NotFoundException(`Mug #${id} not found`)
     }
