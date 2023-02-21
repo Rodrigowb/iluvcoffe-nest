@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateMugsDto } from './dto/create-mugs.dto';
 import { UpdateMugsDto } from './dto/update-mugs.dto';
+import { Color } from './entities/color.entity';
 import { Mugs } from './entities/mugs.entity';
 
 
@@ -12,6 +13,8 @@ export class MugsService {
   constructor(
     @InjectRepository(Mugs)
     private readonly mugsRepository: Repository<Mugs>,
+    @InjectRepository(Color)
+    private readonly colorRepository: Repository<Color>
   ) {}
 
   findAll() {
@@ -35,17 +38,29 @@ export class MugsService {
     return mug;
   }
 
-  create(createMugsDto: CreateMugsDto) {
-    const mug = this.mugsRepository.create(createMugsDto)
+  async create(createMugsDto: CreateMugsDto) {
+    const colors = await Promise.all(
+      createMugsDto.colors.map(name => this.preloadColorByName(name))
+    );
+    const mug = this.mugsRepository.create({
+      ...createMugsDto,
+      colors,
+    })
     return this.mugsRepository.save(mug)
 
   }
 
   async update(id: string, updateMugsDto: UpdateMugsDto) {
+    const colors = updateMugsDto && (await Promise.all(
+      updateMugsDto.colors.map(name => this.preloadColorByName(name))
+    ))
+
     const mug = await this.mugsRepository.preload({
       id: +id,
-      ...updateMugsDto
+      ...updateMugsDto,
+      colors
     });
+    
     if (!mug) {
       throw new NotFoundException(`Mug #${id} not found`);
     }
@@ -56,6 +71,17 @@ export class MugsService {
     const mug = await this.findOne(id)
     return this.mugsRepository.remove(mug);
   
+  }
+  
+  // Check if a color already exists to avoid duplicity in cascadian inserts
+  private async preloadColorByName(name: string): Promise<Color>{
+    const existingColor = await this.colorRepository.findOne({
+      where: { name },
+    });
+    if (existingColor) {
+      return existingColor;
     }
+    return this.colorRepository.create({ name });
+  }
   }
 

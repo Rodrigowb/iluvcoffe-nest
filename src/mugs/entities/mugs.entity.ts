@@ -15,7 +15,10 @@ export class Mugs {
   @JoinTable()
   @ManyToMany(
     type => Color,
-    color => color.mugs
+    color => color.mugs,
+    {
+      cascade: true,
+    }
   )
-  colors: string[];
+  colors: Color[];
 }
