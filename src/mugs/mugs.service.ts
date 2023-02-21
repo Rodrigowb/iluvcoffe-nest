@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { Repository } from 'typeorm';
 import { CreateMugsDto } from './dto/create-mugs.dto';
 import { UpdateMugsDto } from './dto/update-mugs.dto';
@@ -17,11 +18,14 @@ export class MugsService {
     private readonly colorRepository: Repository<Color>
   ) {}
 
-  findAll() {
+  findAll(PaginationQuery: PaginationQueryDto) {
+    const { limit, offset } = PaginationQuery;
     return this.mugsRepository.find({
       relations: {
         colors: true
-      }
+      },
+      skip: offset,
+      take: limit
     });
   }
 

@@ -2,6 +2,7 @@ import { Controller, Get, Query, Param, Post, Body, Patch, Delete } from '@nestj
 import { MugsService } from './mugs.service';
 import { CreateMugsDto } from './dto/create-mugs.dto'
 import { UpdateMugsDto } from './dto/update-mugs.dto'
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 
 @Controller('mugs')
 export class MugsController {
@@ -12,8 +13,8 @@ export class MugsController {
 
   // Endpoints go here
   @Get()
-  findAll() {
-    return this.mugsService.findAll()
+  findAll(@Query() PaginationQuery: PaginationQueryDto) {
+    return this.mugsService.findAll(PaginationQuery);
   }
 
   @Get(':id')
