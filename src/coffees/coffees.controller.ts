@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query } from '@nestjs/common';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto'
@@ -11,8 +12,8 @@ export class CoffeesController {
   }
   @Get()
     // Use query to paginate the response
-  findAll() {
-    return this.coffeesService.findAll();
+  findAll(@Query() PaginationQuery: PaginationQueryDto) {
+    return this.coffeesService.findAll(PaginationQuery);
   }
 
   // Return route parameters
