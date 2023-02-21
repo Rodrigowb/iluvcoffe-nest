@@ -9,7 +9,7 @@ export class CoffeesController {
   constructor(private readonly coffeesService: CoffeesService) {
 
   }
-  @Get('flavors')
+  @Get()
     // Use query to paginate the response
   findAll() {
     return this.coffeesService.findAll();
