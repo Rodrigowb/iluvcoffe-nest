@@ -1,3 +1,5 @@
+// Representation of a table in a database
+
 import { Entity, PrimaryGeneratedColumn, Column, JoinTable, ManyToMany } from 'typeorm';
 import { Flavor } from './flavor.entity';
 

@@ -1,3 +1,5 @@
+// Data transfer object (validate incomming requests)
+
 import { IsString } from 'class-validator';
 
 export class CreateCoffeeDto {
