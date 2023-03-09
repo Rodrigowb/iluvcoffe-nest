@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Scope } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { Repository } from 'typeorm';
@@ -8,7 +8,7 @@ import { Color } from './entities/color.entity';
 import { Mugs } from './entities/mugs.entity';
 
 
-@Injectable()
+@Injectable({ scope: Scope.REQUEST})
 export class MugsService {
   // Inject repository from our entity
   constructor(
@@ -16,7 +16,9 @@ export class MugsService {
     private readonly mugsRepository: Repository<Mugs>,
     @InjectRepository(Color)
     private readonly colorRepository: Repository<Color>
-  ) {}
+  ) {
+    console.log('MugsService instantiated')
+  }
 
   findAll(PaginationQuery: PaginationQueryDto) {
     const { limit, offset } = PaginationQuery;
